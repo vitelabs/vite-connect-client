@@ -12,7 +12,7 @@
   "homepage": "https://github.com/WalletConnect/walletconnect-monorepo/tree/v1.0.0-beta",
   "license": "LGPL-3.0",
   "scripts": {
-    "example": "parcel ./example/index.html --no-cache",
+    "example": "npm run build && parcel ./example/index.html --no-cache",
     "build-example": "parcel build ./example/index.html",
     "ls": "lerna ls",
     "bootstrap": "npm install && lerna bootstrap",
