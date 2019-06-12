@@ -13,7 +13,7 @@
   "license": "LGPL-3.0",
   "scripts": {
     "example": "parcel ./example/index.html --no-cache",
-    "build-example":"parcel build ./example/index.html",
+    "build-example": "parcel build ./example/index.html",
     "ls": "lerna ls",
     "bootstrap": "npm install && lerna bootstrap",
     "build": "lerna run build",

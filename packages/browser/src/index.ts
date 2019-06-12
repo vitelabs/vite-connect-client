@@ -1,4 +1,4 @@
-import Connector from '@walletconnect/core/src/index'
+import Connector from '@walletconnect/core'
 import { IWalletConnectOptions } from '@walletconnect/types'
 import * as cryptoLib from './webCrypto'
 import WebStorage from './webStorage'
