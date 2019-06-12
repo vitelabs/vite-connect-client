@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  </head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script defer="" src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script src="/index.ts"></script>
+  <body>
+    <div class="op_group">
+      <div class="create_connection button">创建连接</div>
+      <div class="kill_connection button">断开链接</div>
+      <div class="connection_status tag">连接状态</div>
+      <input id="bridge_addr" type="text" class="input is-primary" placeholder="请输入bridge 地址 如：http://192.168.31.82:5001">
+    </div>
+    <div class="columns">
+      <div class="column">
+        <textarea class="textarea" cols="30" rows="10"></textarea>
+        <div class="button send_tx">发送交易</div>
+      </div>
+      <div class="column">
+        <textarea class="textarea" cols="30" rows="10"></textarea>
+        <div class="button sign_tx">签名交易</div>
+      </div>
+      <div class="column">
+        <textarea class="textarea" cols="30" rows="10"></textarea>
+        <div class="button sign_bytes">签名任意内容</div>
+      </div>
+    </div>
+    <div class="log_broad content">
+      <ol type="1"></ol>
+    </div>
+    <div class="button">清空日志</div>
+  </body>
+  <style>.log_broad{
+      height: 300px;
+      overflow-y: scroll;
+      border:1px solid gray;
+  }
+  .log_broad ol li:hover{
+    
+  }</style>
+</html>

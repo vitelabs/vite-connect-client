@@ -112,7 +112,7 @@ class Connector {
     }
 
     let session = opts.session || null
-
+    debugger
     if (!session) {
       session = this._getStorageSession()
     }
