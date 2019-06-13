@@ -59,7 +59,7 @@ class Connector {
   private _handshakeTopic: string
   private _accounts: string[]
   private _chainId: number
-  private _socket: SocketTransport
+  public _socket: SocketTransport
   private _eventManager: EventManager
   private _connected: boolean
   private _storage: ISessionStorage | null
