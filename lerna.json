@@ -1,6 +1,9 @@
 {
   "version": "1.0.0-beta.24",
   "packages": [
-    "packages/*"
+    "packages/browser",
+    "packages/core",
+    "packages/types",
+    "packages/utils"
   ]
 }

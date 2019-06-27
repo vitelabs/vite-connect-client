@@ -5,6 +5,9 @@ declare global {
     example: Example;
   }
 }
+
+let accounts = null;
+let chainId = null;
 class Example {
   constructor() {
     // ------------init walletConnector
@@ -16,15 +19,22 @@ class Example {
     }, 500);
     //----------------
 
-    $(".create_connection").click(() => this.createSession());
-    $(".kill_connection").click(() => {
+    $(".create_connect").click(() => this.connect());
+    $(".approve_session").click(() => {
+      if (!this.walletConnector) {
+        this.error(`walletConnector hasn't been created now`);
+        return;
+      }
+      this.walletConnector.approveSession({ chainId, accounts });
+    });
+    $(".kill_session").click(() => {
       if (!this.walletConnector) {
         this.error(`walletConnector hasn't been created now`);
         return;
       }
       this.walletConnector.killSession();
     });
-    $(".clear_session").click(()=>localStorage.clear())
+
     $(".send_event").click(e => {
       try {
         const eventName = String($("#event_name").val());
@@ -34,7 +44,9 @@ class Example {
             .children("textarea")
             .val()
         );
-        this.info('send:'+JSON.stringify({ method: eventName, params: [content] }))
+        this.info(
+          "send:" + JSON.stringify({ method: eventName, params: [content] })
+        );
         this.walletConnector
           .sendCustomRequest({ method: eventName, params: [content] })
           .then(res => this.info(`received ${JSON.stringify(res)}`))
@@ -105,50 +117,43 @@ class Example {
   error(...args) {
     let msg = ``;
     args.forEach(v => {
-        if(v instanceof Error){
-            msg+=v.message;
-            return;
-        }
+      if (v instanceof Error) {
+        msg += v.message;
+        return;
+      }
       typeof v === "string" ? (msg += v) : (msg += JSON.stringify(v));
     });
     this.log(msg, "danger");
   }
-  createSession() {
-    const bridge = String($("#bridge_addr").val())||"ws://hurrytospring.com:5001";
-    if (!bridge) {
+  connect() {
+    const uri = String($("#uri").val());
+    if (!uri) {
       this.error("lack brdige");
       return;
     }
+    this.info(`connect to bridge ${uri}`);
     this.walletConnector = new WalletConnect({
-      bridge // Required
+      uri // Required
       // uri:`wc:ff02e2fc-4709-452d-9eb2-0ef74e6ce91d@1?bridge=http%3A%2F%2F192.168.31.82%3A5001&key=c4c59bea010710f35b9abc77456e3bc085d4ee0a0dc69d6c39358e0078396028`
-    });
-
-    this.walletConnector.on("connect", (error, payload) => {
-      this.setStatus();
-      if (error) {
-        this.error(error);
-        throw error;
-      }
-      // Close QR Code Modal
-
-      // Get provided accounts and chainId
-      const { accounts, chainId } = payload.params[0];
-      this.info("connected", accounts, chainId);
     });
     this.walletConnector.on("session_update", (error, payload) => {
       if (error) {
         this.error(error);
         throw error;
       }
-
+    });
+    this.walletConnector.on("session_request", (error, payload) => {
+      if (error) {
+        this.error(error);
+        throw error;
+      }
       // Get updated accounts and chainId
-      const { accounts, chainId } = payload.params[0];
-      this.info("session_update");
+      accounts = payload.params[0].accounts;
+      chainId = payload.params[0].chainId;
+      this.info("session_request");
     });
 
     this.walletConnector.on("disconnect", (error, payload) => {
-      console.log(99999);
       this.setStatus();
       if (error) {
         this.error(error);
@@ -158,18 +163,15 @@ class Example {
 
       // Delete walletConnector
     });
-    // this.walletConnector._connected=true;
-    if (!this.walletConnector.connected) {
-      // create new session
+    this.walletConnector.on("testmsg", (error, payload) => {
+      if (error) {
+        this.error(error);
+        throw error;
+      }
+      this.info("testmsg", payload);
 
-      this.walletConnector.createSession().then(() => {
-        // get uri for QR Code modal
-        const uri = this.walletConnector.uri;
-        // display QR Code modal
-
-        this.log(`uri getted:${uri}`);
-      });
-    }
+      // Delete walletConnector
+    });
   }
 }
 // Create a walletConnector
