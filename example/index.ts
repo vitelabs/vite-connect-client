@@ -35,9 +35,10 @@ class Example {
             .children("textarea")
             .val()
         );
+
         this.info('send:'+JSON.stringify({ method: eventName, params: [content] }))
         this.walletConnector
-          .sendCustomRequest({ method: eventName, params: [content] })
+          .sendCustomRequest({ method: eventName, params: [JSON.parse(content)] })
           .then(res => this.info(`received ${JSON.stringify(res)}`))
           .catch(e => this.error(e));
       } catch (e) {
