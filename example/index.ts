@@ -1,4 +1,5 @@
 import WalletConnect from "../packages/browser/src/index";
+import {copy} from "./utils";
 
 declare global {
   interface Window {
@@ -148,7 +149,6 @@ class Example {
     });
 
     this.walletConnector.on("disconnect", (error, payload) => {
-      console.log(99999);
       this.setStatus();
       if (error) {
         this.error(error);
@@ -166,8 +166,9 @@ class Example {
         // get uri for QR Code modal
         const uri = this.walletConnector.uri;
         // display QR Code modal
-
+        copy(uri)
         this.log(`uri getted:${uri}`);
+
       });
     }
   }

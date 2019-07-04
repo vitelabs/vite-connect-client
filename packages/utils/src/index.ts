@@ -1,10 +1,7 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { isHexString,hexlify,arrayify } from '@ethersproject/bytes'
-import { getAddress } from '@ethersproject/address'
 import { toUtf8Bytes,toUtf8String } from '@ethersproject/strings'
 
 import {
-  ITxData,
   IClientMeta,
   IParseURIResult,
   IRequiredParamsResult,
@@ -38,12 +35,6 @@ export function convertArrayBufferToHex (
   return hex
 }
 
-export function convertArrayBufferToNumber (arrayBuffer: ArrayBuffer): number {
-  const hex = convertArrayBufferToHex(arrayBuffer)
-  const num = convertHexToNumber(hex)
-  return num
-}
-
 export function concatArrayBuffers (...args: ArrayBuffer[]): ArrayBuffer {
   const hex: string = args.map(b => convertArrayBufferToHex(b, true)).join('')
   const result: ArrayBuffer = convertHexToArrayBuffer(hex)
@@ -71,12 +62,6 @@ export function convertBufferToHex (buffer: Buffer, noPrefix?: boolean): string 
   return hex
 }
 
-export function convertBufferToNumber (buffer: Buffer): number {
-  const hex = convertBufferToHex(buffer)
-  const num = convertHexToNumber(hex)
-  return num
-}
-
 export function concatBuffers (...args: Buffer[]): Buffer {
   const hex: string = args.map(b => convertBufferToHex(b, true)).join('')
   const result: Buffer = convertHexToBuffer(hex)
@@ -101,38 +86,6 @@ export function convertUtf8ToHex (utf8: string, noPrefix?: boolean): string {
   return hex
 }
 
-export function convertUtf8ToNumber (utf8: string): number {
-  const num = BigNumber.from(utf8).toNumber()
-  return num
-}
-
-// -- Number ----------------------------------------------- //
-
-export function convertNumberToBuffer (num: number): Buffer {
-  const hex = convertNumberToHex(num)
-  const buffer = convertHexToBuffer(hex)
-  return buffer
-}
-
-export function convertNumberToArrayBuffer (num: number): ArrayBuffer {
-  const hex = convertNumberToHex(num)
-  const arrayBuffer = convertHexToArrayBuffer(hex)
-  return arrayBuffer
-}
-
-export function convertNumberToUtf8 (num: number): string {
-  const utf8 = BigNumber.from(num).toString()
-  return utf8
-}
-
-export function convertNumberToHex (num: number, noPrefix?: boolean): string {
-  let hex = BigNumber.from(num).toHexString()
-  if (noPrefix) {
-    hex = removeHexPrefix(hex)
-  }
-  return hex
-}
-
 // -- Hex -------------------------------------------------- //
 
 export function convertHexToBuffer (hex: string): Buffer {
@@ -151,11 +104,6 @@ export function convertHexToUtf8 (hex: string): string {
   const arrayBuffer = convertHexToArrayBuffer(hex)
   const utf8 = convertArrayBufferToUtf8(arrayBuffer)
   return utf8
-}
-
-export function convertHexToNumber (hex: string): number {
-  const num = BigNumber.from(hex).toNumber()
-  return num
 }
 
 // -- Misc ------------------------------------------------- //
@@ -203,27 +151,6 @@ export function uuid (): string {
     return b
   })()
   return result
-}
-
-export const toChecksumAddress = (address: string) => {
-  return getAddress(address)
-}
-
-export const isValidAddress = (address?: string) => {
-  if (!address) {
-    return false
-  } else if (address.toLowerCase().substring(0, 2) !== '0x') {
-    return false
-  } else if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
-    return false
-  } else if (
-    /^(0x)?[0-9a-f]{40}$/.test(address) ||
-    /^(0x)?[0-9A-F]{40}$/.test(address)
-  ) {
-    return true
-  } else {
-    return address === toChecksumAddress(address)
-  }
 }
 
 export function getMeta (): IClientMeta | null {
@@ -451,54 +378,6 @@ export function parsePersonalSign (params: string[]): string[] {
     params[1] = convertUtf8ToHex(params[1])
   }
   return params
-}
-
-export function parseTransactionData (
-  txData: Partial<ITxData>
-): Partial<ITxData> {
-  if (typeof txData.from === 'undefined' || !isValidAddress(txData.from)) {
-    throw new Error(`Transaction object must include a valid 'from' value.`)
-  }
-
-  function parseHexValues (value: number | string) {
-    let result = value
-    if (!isHexString(value)) {
-      if (typeof value === 'string') {
-        value = convertUtf8ToNumber(value)
-      }
-      result = convertNumberToHex(value)
-    }
-    return result
-  }
-
-  const txDataRPC = {
-    from: sanitizeHex(txData.from),
-    to: typeof txData.to === 'undefined' ? '' : sanitizeHex(txData.to),
-    gasPrice:
-      typeof txData.gasPrice === 'undefined'
-        ? ''
-        : parseHexValues(txData.gasPrice),
-    gasLimit:
-      typeof txData.gasLimit === 'undefined'
-        ? typeof txData.gas === 'undefined'
-          ? ''
-          : parseHexValues(txData.gas)
-        : parseHexValues(txData.gasLimit),
-    value:
-      typeof txData.value === 'undefined' ? '' : parseHexValues(txData.value),
-    nonce:
-      typeof txData.nonce === 'undefined' ? '' : parseHexValues(txData.nonce),
-    data: typeof txData.data === 'undefined' ? '' : sanitizeHex(txData.data)
-  }
-
-  const prunable = ['gasPrice', 'gasLimit', 'value', 'nonce']
-  Object.keys(txDataRPC).forEach((key: string) => {
-    if (!txDataRPC[key].trim().length && prunable.includes(key)) {
-      delete txDataRPC[key]
-    }
-  })
-
-  return txDataRPC
 }
 
 export function formatRpcError (

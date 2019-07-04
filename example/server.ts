@@ -27,6 +27,9 @@ class Example {
       }
       this.walletConnector.approveSession({ chainId, accounts });
     });
+    $(".clear_log").click(()=>{
+        this._logEle.remove('ol')
+    })
     $(".kill_session").click(() => {
       if (!this.walletConnector) {
         this.error(`walletConnector hasn't been created now`);

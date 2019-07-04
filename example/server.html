@@ -1,40 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
   </head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+  />
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-  <script defer="" src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script
+    defer=""
+    src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+  ></script>
   <script src="/server.ts"></script>
   <body>
-    <div class="op_group">
-        <input type="text" placeholder="uri" id="uri">
-        <div class="create_connect button">连接</div>
-      <div class="approve_session button" >接受</div>
-      <div class="kill_session button">拒绝</div>
-    </div>
-    <div class="columns">
-      <div class="column">
-        <input id="event_name" type="text" class="input is-primary" placeholder="请输入eventName">
-        <textarea class="textarea" cols="30" rows="10"></textarea>
-        <div class="button send_event">发送任意事件</div>
+    <div class="container">
+      <div class="op">
+        <div class="op_group">
+          <input type="text" placeholder="uri" id="uri" class="input" />
+          <div class="create_connect button">连接</div>
+          <div class="approve_session button">接受</div>
+          <div class="kill_session button">拒绝</div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <input
+              id="event_name"
+              type="text"
+              class="input is-primary"
+              placeholder="请输入eventName"
+            />
+            <textarea class="textarea" cols="30" rows="10"></textarea>
+            <div class="button send_event">发送任意事件</div>
+          </div>
+        </div>
       </div>
+      <div class="log_broad content">
+        <ol type="1"></ol>
+        <div class="clear_log button">清空日志</div>
+      </div>
+
     </div>
-    <div class="log_broad content">
-      <ol type="1"></ol>
-    </div>
-    <div id="clear_session" class="button">清空缓存session</div>
   </body>
-  <style>.log_broad{
-      height: 300px;
+  <style>
+      html,body,.container{
+          height: 100%;
+      }
+    .container {
+      display: flex;
+
+    }
+    .op{
+        flex:2;
+    }
+    .op_group{
+        margin-top:30px;
+        margin-bottom:50px;
+    }
+    .log_broad {
+      min-height: 100%;
       overflow-y: scroll;
-      border:1px solid gray;
-  }
-  .log_broad ol li:hover{
-    
-  }</style>
+      border: 1px solid gray;
+      flex:1;
+      background: rgba(120, 120, 120, 0.2);
+      margin-left: 20px;
+      position: relative;
+      overflow-y: scroll;
+
+    }
+    .clear_log{
+        position:absolute;
+        bottom: 30px;
+        left:50%;
+        transform: translateX(-50%)
+
+    }
+    .input{
+        margin:20px 0;
+    }
+    .log_broad ol li:hover {
+    }
+  </style>
 </html>

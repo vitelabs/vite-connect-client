@@ -7,14 +7,12 @@ import {
   IJsonRpcResponseSuccess,
   IJsonRpcResponseError,
   IJsonRpcRequest,
-  ITxData,
   IClientMeta,
   IParseURIResult,
   ISessionParams,
   IWalletConnectOptions
 } from "@walletconnect/types";
 import {
-  parseTransactionData,
   convertArrayBufferToHex,
   convertHexToArrayBuffer,
   getMeta,
@@ -492,43 +490,6 @@ class Connector {
     this._handleSessionDisconnect(message);
   }
 // -------methods
-  public async sendTransaction(tx: ITxData) {
-    if (!this._connected) {
-      throw new Error("Session currently disconnected");
-    }
-
-    const parsedTx = parseTransactionData(tx);
-
-    const request = this._formatRequest({
-      method: "eth_sendTransaction",
-      params: [parsedTx]
-    });
-
-    try {
-      const result = await this._sendCallRequest(request);
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async signTypedData(params: any[]) {
-    if (!this._connected) {
-      throw new Error("Session currently disconnected");
-    }
-
-    const request = this._formatRequest({
-      method: "eth_signTypedData",
-      params
-    });
-
-    try {
-      const result = await this._sendCallRequest(request);
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  }
 
   public async sendCustomRequest(request: Partial<IJsonRpcRequest>) {
     if (!this._connected) {
