@@ -22,13 +22,12 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+        "@/*": [
+        "src/*"
+      ]
+    }
   },
-  "include": [],
-  "references": [
-    { "path": "./packages/browser" },
-    { "path": "./packages/core" },
-    { "path": "./packages/react-native" },
-    { "path": "./packages/utils" }
-  ]
+  "include": ["src/**/*", "babel-polyfill.js"]
 }

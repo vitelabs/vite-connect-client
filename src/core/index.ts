@@ -11,7 +11,7 @@ import {
   IParseURIResult,
   ISessionParams,
   IWalletConnectOptions
-} from "@walletconnect/types";
+} from "@/types";
 import {
   convertArrayBufferToHex,
   convertHexToArrayBuffer,
@@ -20,7 +20,7 @@ import {
   uuid,
   formatRpcError,
   parseWalletConnectUri
-} from "@walletconnect/utils";
+} from "@/utils";
 import SocketTransport from "./socket";
 import EventManager from "./events";
 

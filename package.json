@@ -1,11 +1,11 @@
 {
-  "name": "walletconnect-monorepo",
-  "description": "Monorepo for WalletConnect",
+  "name": "@vite/bifrost",
+  "description": "viteBifrost fork from walletconnect",
   "private": true,
   "keywords": [
-    "walletconnect",
-    "ethereum",
-    "web3",
+    "ViteBifrost",
+    "vitejs",
+    "vite",
     "crypto"
   ],
   "author": "WalletConnect <walletconnect.org>",
@@ -35,22 +35,41 @@
     "type": "git",
     "url": "git+https://github.com/walletconnect/walletconnect-monorepo.git"
   },
-  "bugs": {
-    "url": "https://github.com/walletconnect/walletconnect-monorepo/issues"
-  },
   "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "@types/chai": "^4.1.6",
     "@types/jquery": "^3.3.29",
+    "@types/mocha": "^5.2.5",
     "babel-eslint": "^8.2.6",
+    "chai": "^4.1.2",
     "eslint": "^5.8.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "isomorphic-fetch": "^2.2.1",
     "lerna": "^3.15.0",
+    "mocha": "5.2.0",
+    "mock-local-storage": "^1.0.5",
     "parcel-bundler": "^1.12.3",
+    "ts-loader": "^5.3.3",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.2.4"
+    "typescript": "^3.2.4",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "@ethersproject/bytes": "^5.0.0-beta.126",
+    "@ethersproject/strings": "^5.0.0-beta.125",
+    "@types/node": "^12.0.12"
   }
 }

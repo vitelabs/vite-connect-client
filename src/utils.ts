@@ -9,7 +9,7 @@ import {
   IJsonRpcResponseSuccess,
   IJsonRpcResponseError,
   IJsonRpcErrorMessage
-} from '@walletconnect/types'
+} from '@/types'
 
 // -- ArrayBuffer ------------------------------------------ //
 

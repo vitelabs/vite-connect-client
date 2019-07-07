@@ -4,7 +4,7 @@ import {
   IJsonRpcResponseError,
   IJsonRpcRequest,
   IEventEmitter
-} from '@walletconnect/types'
+} from '@/types'
 
 // -- typeChecks ----------------------------------------------------------- //
 

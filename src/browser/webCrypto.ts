@@ -3,7 +3,7 @@ import {
   IJsonRpcResponseError,
   IJsonRpcRequest,
   IEncryptionPayload
-} from '@walletconnect/types'
+} from '@/types'
 
 import {
   concatArrayBuffers,
@@ -12,7 +12,7 @@ import {
   convertHexToArrayBuffer,
   convertUtf8ToArrayBuffer,
   removeHexPrefix
-} from '@walletconnect/utils'
+} from '@/utils'
 
 const AES_ALGORITHM: string = 'AES-CBC'
 const AES_LENGTH: number = 256

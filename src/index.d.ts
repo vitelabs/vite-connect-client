@@ -1,4 +1,4 @@
-declare module '@walletconnect/types' {
+declare module '@/types' {
   export interface ICryptoLib {
     generateKey: (length?: number) => Promise<ArrayBuffer>
     encrypt: (
