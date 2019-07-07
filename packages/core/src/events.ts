@@ -64,9 +64,9 @@ class EventManager {
     }
 
     const reservedEvents = [
-      'wc_sessionRequest',
-      'wc_sessionUpdate',
-      'wc_exchangeKey',
+      'vb_sessionRequest',
+      'vb_sessionUpdate',
+      'vb_exchangeKey',
       'session_request',
       'session_update',
       'exchange_key',

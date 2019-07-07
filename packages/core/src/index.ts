@@ -67,7 +67,7 @@ class Connector {
   ) {
     this.cryptoLib = cryptoLib;
 
-    this.protocol = "wc";
+    this.protocol = "vb";
     this.version = 1;
 
     this._bridge = "";
@@ -355,7 +355,7 @@ class Connector {
     this._key = await this._generateKey();
 
     const request: IJsonRpcRequest = this._formatRequest({
-      method: "wc_sessionRequest",
+      method: "vb_sessionRequest",
       params: [
         {
           peerId: this.clientId,
@@ -452,7 +452,7 @@ class Connector {
     };
 
     const request = this._formatRequest({
-      method: "wc_sessionUpdate",
+      method: "vb_sessionUpdate",
       params: [sessionParams]
     });
 
@@ -481,7 +481,7 @@ class Connector {
     };
 
     const request = this._formatRequest({
-      method: "wc_sessionUpdate",
+      method: "vb_sessionUpdate",
       params: [sessionParams]
     });
 
@@ -764,7 +764,7 @@ class Connector {
   }
 
   private _subscribeToInternalEvents() {
-    this.on("wc_sessionRequest", (error, payload) => {
+    this.on("vb_sessionRequest", (error, payload) => {
       if (error) {
         this._eventManager.trigger({
           event: "error",
@@ -787,7 +787,7 @@ class Connector {
       this._eventManager.trigger(internalPayload);
     });
 
-    this.on("wc_sessionUpdate", (error, payload) => {
+    this.on("vb_sessionUpdate", (error, payload) => {
       if (error) {
         this._handleSessionResponse(error.message);
       }
