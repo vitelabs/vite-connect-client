@@ -32,7 +32,9 @@ class EventManager {
   constructor () {
     this._eventEmitters = []
   }
-
+  public offAll(){
+      this._eventEmitters=[]
+  }
   public subscribe (eventEmitter: IEventEmitter) {
     this._eventEmitters.push(eventEmitter)
   }

@@ -342,7 +342,7 @@ class Connector {
     };
     this._eventManager.subscribe(eventEmitter);
   }
-//-----session
+  //-----session
   public async createSession(opts?: { chainId: number }): Promise<void> {
     if (this._connected) {
       throw new Error("Session currently connected");
@@ -489,7 +489,7 @@ class Connector {
 
     this._handleSessionDisconnect(message);
   }
-// -------methods
+  // -------methods
 
   public async sendCustomRequest(request: Partial<IJsonRpcRequest>) {
     if (!this._connected) {
@@ -791,6 +791,7 @@ class Connector {
       if (error) {
         this._handleSessionResponse(error.message);
       }
+      this.stopBizHeartBeat();
       this._handleSessionResponse("Session disconnected", payload.params[0]);
     });
 
@@ -806,6 +807,7 @@ class Connector {
           ]
         });
       }
+      this.startBizHeartBeat();
       this._socket.pushIncoming();
     });
   }
@@ -813,6 +815,24 @@ class Connector {
   // -- keyManager ------------------------------------------------------- //
 
   // TODO: Refactor with new exchange key flow
+
+  private bizHeartBeatHandler: NodeJS.Timeout | null = null;
+  // ----heartbeat in biz
+  startBizHeartBeat() {
+    this.bizHeartBeatHandler = setInterval(() => {
+      this.sendCustomRequest({ method: `vb_peerPing` });
+    }, 1000);
+  }
+  stopBizHeartBeat() {
+    if (this.bizHeartBeatHandler !== null) {
+      clearInterval(this.bizHeartBeatHandler);
+      this.bizHeartBeatHandler = null;
+    }
+  }
+  destroy() {
+    this._eventManager.offAll();
+    this.stopBizHeartBeat();
+  }
 
   // -- uri ------------------------------------------------------------- //
 
