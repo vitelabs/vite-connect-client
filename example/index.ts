@@ -1,4 +1,4 @@
-import WalletConnect from "../src/browser";
+import WalletConnect from "../";
 import {copy} from "./utils";
 
 declare global {
