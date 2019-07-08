@@ -1,4 +1,5 @@
-import WalletConnect from "../packages/browser/src/index";
+import WalletConnect from "../src/browser";
+
 
 declare global {
   interface Window {
