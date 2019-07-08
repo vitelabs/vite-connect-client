@@ -15,7 +15,8 @@
   "scripts": {
     "example": "npm run build && parcel ./example/index.html --no-cache",
     "build-example": "parcel build ./example/index.html",
-    "lint": "tslint packages/*/src/**/*.ts"
+    "lint": "tslint packages/*/src/**/*.ts",
+    "build":"webpack"
   },
   "repository": {
     "type": "git",
