@@ -25,9 +25,8 @@
     "resolveJsonModule": true,
     "paths": {
         "@/*": [
-        "src/*"
+        "../src/*"
       ]
     }
-  },
-  "include": ["src/**/*", "babel-polyfill.js"]
+  }
 }
