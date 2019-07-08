@@ -830,8 +830,10 @@ class Connector {
     }
   }
   destroy() {
+    this.killSession()
     this._eventManager.offAll();
     this.stopBizHeartBeat();
+    this._socket.close()
   }
 
   // -- uri ------------------------------------------------------------- //
