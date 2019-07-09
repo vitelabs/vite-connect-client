@@ -1,5 +1,5 @@
 {
- "version": "0.0.0",
+  "version": "0.0.1-0",
   "name": "@vite/bifrost",
   "description": "viteBifrost fork from walletconnect",
   "private": true,
@@ -17,7 +17,7 @@
     "example": "parcel ./example/index.html --no-cache",
     "build-example": "parcel build ./example/index.html",
     "lint": "tslint packages/*/src/**/*.ts",
-    "build":"webpack"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
