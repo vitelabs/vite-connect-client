@@ -2,7 +2,6 @@
   "version": "0.0.1-0",
   "name": "@vite/bifrost",
   "description": "viteBifrost fork from walletconnect",
-  "private": true,
   "keywords": [
     "ViteBifrost",
     "vitejs",
