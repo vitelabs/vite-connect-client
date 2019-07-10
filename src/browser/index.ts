@@ -5,7 +5,7 @@ import {IClientMeta} from '@/types';
 
 class WalletConnect extends Connector {
   constructor (opts: IWalletConnectOptions,meta?:IClientMeta) {
-    super(cryptoLib, opts)
+    super(cryptoLib, opts,meta)
   }
 }
 

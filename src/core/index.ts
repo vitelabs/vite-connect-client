@@ -84,7 +84,6 @@ class Connector {
     this._chainId = 0;
     this._eventManager = new EventManager();
     this._connected = false;
-
     if (clientMeta) {
       this._clientMeta = clientMeta;
     }
@@ -211,7 +210,11 @@ class Connector {
   }
 
   get clientMeta() {
-    return !this._clientMeta||!getMeta()?null:this._clientMeta=Object.assign({},this._clientMeta||{},getMeta()||{})
+      if(!this._clientMeta&&!getMeta()){
+          return null;
+      }else{
+          return Object.assign({},this._clientMeta||{},getMeta()||{}) as IClientMeta;
+      }
   }
 
   set peerMeta(value) {
@@ -349,14 +352,13 @@ class Connector {
     }
 
     this._key = await this._generateKey();
-
     const request: IJsonRpcRequest = this._formatRequest({
       method: "vb_sessionRequest",
       params: [
         {
           peerId: this.clientId,
           peerMeta: this.clientMeta,
-          chainId: opts && opts.chainId ? opts.chainId : null
+          chainId: opts && opts.chainId ? opts.chainId : null,
         }
       ]
     });
