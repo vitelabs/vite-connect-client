@@ -100,7 +100,8 @@ declare module '@/types' {
     description: string
     url: string
     icons: string[]
-    name: string
+    name: string,
+    lastAccount?:string
   }
 
   export interface IEventEmitter {

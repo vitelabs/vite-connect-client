@@ -86,7 +86,7 @@ class Connector {
     this._connected = false;
 
     if (clientMeta) {
-      this.clientMeta = clientMeta;
+      this._clientMeta = clientMeta;
     }
 
     if (!opts.bridge && !opts.uri && !opts.session) {
@@ -211,11 +211,7 @@ class Connector {
   }
 
   get clientMeta() {
-    let clientMeta: IClientMeta | null = this._clientMeta;
-    if (!clientMeta) {
-      clientMeta = this._clientMeta = getMeta();
-    }
-    return clientMeta;
+    return !this._clientMeta||!getMeta()?null:this._clientMeta=Object.assign({},this._clientMeta||{},getMeta()||{})
   }
 
   set peerMeta(value) {
@@ -820,8 +816,9 @@ class Connector {
   // ----heartbeat in biz
   startBizHeartBeat() {
     this.bizHeartBeatHandler = setInterval(() => {
+        console.log('vb_heart')
       this.sendCustomRequest({ method: `vb_peerPing` });
-    }, 1000);
+    }, 5000);
   }
   stopBizHeartBeat() {
     if (this.bizHeartBeatHandler !== null) {
