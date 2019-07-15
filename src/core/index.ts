@@ -210,11 +210,15 @@ class Connector {
   }
 
   get clientMeta() {
-      if(!this._clientMeta&&!getMeta()){
-          return null;
-      }else{
-          return Object.assign({},this._clientMeta||{},getMeta()||{}) as IClientMeta;
-      }
+    if (!this._clientMeta && !getMeta()) {
+      return null;
+    } else {
+      return Object.assign(
+        {},
+        this._clientMeta || {},
+        getMeta() || {}
+      ) as IClientMeta;
+    }
   }
 
   set peerMeta(value) {
@@ -358,7 +362,7 @@ class Connector {
         {
           peerId: this.clientId,
           peerMeta: this.clientMeta,
-          chainId: opts && opts.chainId ? opts.chainId : null,
+          chainId: opts && opts.chainId ? opts.chainId : null
         }
       ]
     });
@@ -815,11 +819,21 @@ class Connector {
   // TODO: Refactor with new exchange key flow
 
   private bizHeartBeatHandler: NodeJS.Timeout | null = null;
+  private heartCounter = 0;
   // ----heartbeat in biz
   startBizHeartBeat() {
     this.bizHeartBeatHandler = setInterval(() => {
-        console.log('vb_heart')
-      this.sendCustomRequest({ method: `vb_peerPing` });
+      console.log("vb_heart");
+      if (this.heartCounter >= 1) {
+        this._eventManager.trigger({
+          event: "disconnect",
+          params: [{message:'loss heart beat'}]
+        });
+      }
+      this.heartCounter += 1;
+      this.sendCustomRequest({ method: `vb_peerPing` }).then(res => {
+        this.heartCounter -= 1;
+      });
     }, 5000);
   }
   stopBizHeartBeat() {
@@ -829,10 +843,10 @@ class Connector {
     }
   }
   destroy() {
-    this.killSession()
+    this.killSession();
     this._eventManager.offAll();
     this.stopBizHeartBeat();
-    this._socket.close()
+    this._socket.close();
   }
 
   // -- uri ------------------------------------------------------------- //

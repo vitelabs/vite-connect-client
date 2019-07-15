@@ -106,7 +106,7 @@ declare module '@/types' {
 
   export interface IEventEmitter {
     event: string
-    callback: (error: Error | null, request: any | null) => void
+    callback: (error: any | null, request: any | null) => void
   }
 
   export interface IRequiredParamsResult {

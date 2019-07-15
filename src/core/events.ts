@@ -87,7 +87,7 @@ class EventManager {
 
     eventEmitters.forEach((eventEmitter: IEventEmitter) => {
       if (isRpcResponseError(payload)) {
-        const error = new Error(payload.error.message)
+        const error = {message:payload.error.message,code:payload.error.code||11000}
         eventEmitter.callback(error, null)
       } else {
         eventEmitter.callback(null, payload)
