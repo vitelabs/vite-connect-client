@@ -843,10 +843,13 @@ class Connector {
     }
   }
   destroy() {
-    this.killSession();
-    this._eventManager.offAll();
-    this.stopBizHeartBeat();
-    this._socket.close();
+    this.killSession().finally(()=>{
+        this._eventManager.offAll();
+        this._socket.close();
+        this.stopBizHeartBeat();
+        });
+
+
   }
 
   // -- uri ------------------------------------------------------------- //
