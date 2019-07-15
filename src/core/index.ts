@@ -827,7 +827,7 @@ class Connector {
       if (this.heartCounter >= 1) {
         this._eventManager.trigger({
           event: "disconnect",
-          params: [{message:'loss heart beat'}]
+          params: [{ message: "loss heart beat" }]
         });
       }
       this.heartCounter += 1;
@@ -843,13 +843,16 @@ class Connector {
     }
   }
   destroy() {
-    this.killSession().finally(()=>{
-        this._eventManager.offAll();
-        this._socket.close();
-        this.stopBizHeartBeat();
-        });
-
-
+    this.killSession().finally(() => {
+      this._eventManager.offAll();
+      this._socket.close();
+      this.stopBizHeartBeat();
+    });
+    setTimeout(() => {// force to kill if killsession is pending
+      this._eventManager.offAll();
+      this._socket.close();
+      this.stopBizHeartBeat();
+    }, 2000);
   }
 
   // -- uri ------------------------------------------------------------- //
