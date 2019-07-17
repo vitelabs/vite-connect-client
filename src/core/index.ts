@@ -823,8 +823,7 @@ class Connector {
   // ----heartbeat in biz
   startBizHeartBeat() {
     this.bizHeartBeatHandler = setInterval(() => {
-      console.log("vb_heart");
-      if (this.heartCounter >= 1) {
+      if (this.heartCounter >= 2) {
         this._eventManager.trigger({
           event: "disconnect",
           params: [{ message: "loss heart beat" }]
