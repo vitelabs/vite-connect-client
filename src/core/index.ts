@@ -67,7 +67,7 @@ class Connector {
   ) {
     this.cryptoLib = cryptoLib;
 
-    this.protocol = "vb";
+    this.protocol = "vc";
     this.version = 1;
 
     this._bridge = "";
@@ -357,7 +357,7 @@ class Connector {
 
     this._key = await this._generateKey();
     const request: IJsonRpcRequest = this._formatRequest({
-      method: "vb_sessionRequest",
+      method: "vc_sessionRequest",
       params: [
         {
           peerId: this.clientId,
@@ -454,7 +454,7 @@ class Connector {
     };
 
     const request = this._formatRequest({
-      method: "vb_sessionUpdate",
+      method: "vc_sessionUpdate",
       params: [sessionParams]
     });
 
@@ -483,7 +483,7 @@ class Connector {
     };
 
     const request = this._formatRequest({
-      method: "vb_sessionUpdate",
+      method: "vc_sessionUpdate",
       params: [sessionParams]
     });
 
@@ -766,7 +766,7 @@ class Connector {
   }
 
   private _subscribeToInternalEvents() {
-    this.on("vb_sessionRequest", (error, payload) => {
+    this.on("vc_sessionRequest", (error, payload) => {
       if (error) {
         this._eventManager.trigger({
           event: "error",
@@ -789,7 +789,7 @@ class Connector {
       this._eventManager.trigger(internalPayload);
     });
 
-    this.on("vb_sessionUpdate", (error, payload) => {
+    this.on("vc_sessionUpdate", (error, payload) => {
       if (error) {
         this._handleSessionResponse(error.message);
       }
@@ -830,7 +830,7 @@ class Connector {
         });
       }
       this.heartCounter += 1;
-      this.sendCustomRequest({ method: `vb_peerPing` }).then(res => {
+      this.sendCustomRequest({ method: `vc_peerPing` }).then(res => {
         this.heartCounter -= 1;
       });
     }, 5000);
