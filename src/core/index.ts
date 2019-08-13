@@ -823,12 +823,13 @@ class Connector {
   // ----heartbeat in biz
   startBizHeartBeat() {
     this.bizHeartBeatHandler = setInterval(() => {
-      if (this.heartCounter >= 2) {
-        this._eventManager.trigger({
-          event: "disconnect",
-          params: [{ message: "loss heart beat" }]
-        });
-      }
+        //-----------for test
+    //   if (this.heartCounter >= 2) {
+    //     this._eventManager.trigger({
+    //       event: "disconnect",
+    //       params: [{ message: "loss heart beat" }]
+    //     });
+    //   } 
       this.heartCounter += 1;
       this.sendCustomRequest({ method: `vc_peerPing` }).then(res => {
         this.heartCounter -= 1;
