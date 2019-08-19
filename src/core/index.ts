@@ -793,7 +793,6 @@ class Connector {
       if (error) {
         this._handleSessionResponse(error.message);
       }
-      this.stopBizHeartBeat();
       this._handleSessionResponse("Session disconnected", payload.params[0]);
     });
 
@@ -809,7 +808,6 @@ class Connector {
           ]
         });
       }
-      this.startBizHeartBeat();
       this._socket.pushIncoming();
     });
     this.on("vc_peerPing", (error, payload) => {
@@ -825,42 +823,15 @@ class Connector {
   // -- keyManager ------------------------------------------------------- //
 
   // TODO: Refactor with new exchange key flow
-
-  private bizHeartBeatHandler: NodeJS.Timeout | null = null;
-  private heartCounter = 0;
-  // ----heartbeat in biz
-  startBizHeartBeat() {
-    this.bizHeartBeatHandler = setInterval(() => {
-      //-----------for test
-      //   if (this.heartCounter >= 2) {
-      //     this._eventManager.trigger({
-      //       event: "disconnect",
-      //       params: [{ message: "loss heart beat" }]
-      //     });
-      //   }
-      this.heartCounter += 1;
-      this.sendCustomRequest({ method: `vc_peerPing` }).then(res => {
-        this.heartCounter -= 1;
-      });
-    }, 5000);
-  }
-  stopBizHeartBeat() {
-    if (this.bizHeartBeatHandler !== null) {
-      clearInterval(this.bizHeartBeatHandler);
-      this.bizHeartBeatHandler = null;
-    }
-  }
   destroy() {
     this.killSession().finally(() => {
       this._eventManager.offAll();
       this._socket.close();
-      this.stopBizHeartBeat();
     });
     setTimeout(() => {
       // force to kill if killsession is pending
       this._eventManager.offAll();
       this._socket.close();
-      this.stopBizHeartBeat();
     }, 2000);
   }
 
