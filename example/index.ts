@@ -1,5 +1,5 @@
 import WalletConnect from "../";
-import {copy} from "./utils";
+import { copy } from "./utils";
 
 declare global {
   interface Window {
@@ -25,7 +25,9 @@ class Example {
       }
       this.walletConnector.killSession();
     });
-    $(".clear_session").click(()=>localStorage.clear())
+    $("#clear_session").click(() => {
+      this._logEle.children().remove();
+    });
     $(".send_event").click(e => {
       try {
         const eventName = String($("#event_name").val());
@@ -36,9 +38,14 @@ class Example {
             .val()
         );
 
-        this.info('send:'+JSON.stringify({ method: eventName, params: [content] }))
+        this.info(
+          "send:" + JSON.stringify({ method: eventName, params: [content] })
+        );
         this.walletConnector
-          .sendCustomRequest({ method: eventName, params: [JSON.parse(content)] })
+          .sendCustomRequest({
+            method: eventName,
+            params: [JSON.parse(content)]
+          })
           .then(res => this.info(`received ${JSON.stringify(res)}`))
           .catch(e => this.error(e));
       } catch (e) {
@@ -86,7 +93,7 @@ class Example {
   log(msg: string, level: "info" | "warning" | "danger" = "info") {
     const time = new Date();
     const logItem = $(
-      `<li class="has-text-${level}"><span class="has-text-light">${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}</span>${msg}</li>`
+      `<li class="has-text-${level}"><span class="has-text-ligth" style="margin-right:10px;color:#777">${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}</span>${msg}</li>`
     );
     this._logEle.append(logItem);
   }
@@ -107,16 +114,17 @@ class Example {
   error(...args) {
     let msg = ``;
     args.forEach(v => {
-        if(v instanceof Error){
-            msg+=v.message;
-            return;
-        }
+      if (v instanceof Error) {
+        msg += v.message;
+        return;
+      }
       typeof v === "string" ? (msg += v) : (msg += JSON.stringify(v));
     });
     this.log(msg, "danger");
   }
   createSession() {
-    const bridge = String($("#bridge_addr").val())||"ws://hurrytospring.com:5001";
+    const bridge =
+      String($("#bridge_addr").val()) || "ws://hurrytospring.com:5001";
     if (!bridge) {
       this.error("lack brdige");
       return;
@@ -150,12 +158,13 @@ class Example {
     });
 
     this.walletConnector.on("disconnect", (error, payload) => {
+      console.log("disconnecteddddd");
       this.setStatus();
       if (error) {
         this.error(error);
         throw error;
       }
-      this.info("disconnected");
+      //   this.info("disconnected");
 
       // Delete walletConnector
     });
@@ -167,9 +176,8 @@ class Example {
         // get uri for QR Code modal
         const uri = this.walletConnector.uri;
         // display QR Code modal
-        copy(uri)
+        copy(uri);
         this.log(`uri getted:${uri}`);
-
       });
     }
   }
