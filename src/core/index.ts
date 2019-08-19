@@ -812,6 +812,14 @@ class Connector {
       this.startBizHeartBeat();
       this._socket.pushIncoming();
     });
+    this.on("vc_peerPing", (error, payload) => {
+      const response = {
+        id: payload.id,
+        jsonrpc: "2.0",
+        result: null
+      };
+      this._sendResponse(response);
+    });
   }
 
   // -- keyManager ------------------------------------------------------- //
@@ -823,13 +831,13 @@ class Connector {
   // ----heartbeat in biz
   startBizHeartBeat() {
     this.bizHeartBeatHandler = setInterval(() => {
-        //-----------for test
-    //   if (this.heartCounter >= 2) {
-    //     this._eventManager.trigger({
-    //       event: "disconnect",
-    //       params: [{ message: "loss heart beat" }]
-    //     });
-    //   } 
+      //-----------for test
+      //   if (this.heartCounter >= 2) {
+      //     this._eventManager.trigger({
+      //       event: "disconnect",
+      //       params: [{ message: "loss heart beat" }]
+      //     });
+      //   }
       this.heartCounter += 1;
       this.sendCustomRequest({ method: `vc_peerPing` }).then(res => {
         this.heartCounter -= 1;
@@ -848,7 +856,8 @@ class Connector {
       this._socket.close();
       this.stopBizHeartBeat();
     });
-    setTimeout(() => {// force to kill if killsession is pending
+    setTimeout(() => {
+      // force to kill if killsession is pending
       this._eventManager.offAll();
       this._socket.close();
       this.stopBizHeartBeat();

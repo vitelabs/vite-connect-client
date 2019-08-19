@@ -71,6 +71,7 @@ class EventManager {
       'vc_exchangeKey',
       'session_request',
       'session_update',
+      'vc_peerPing',
       'exchange_key',
       'connect',
       'disconnect'
