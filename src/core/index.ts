@@ -19,7 +19,8 @@ import {
   payloadId,
   uuid,
   formatRpcError,
-  parseWalletConnectUri
+  parseWalletConnectUri,
+  version
 } from "@/utils";
 import SocketTransport from "./socket";
 import EventManager from "./events";
@@ -386,6 +387,7 @@ class Connector {
     this.accounts = sessionStatus.accounts;
 
     const sessionParams: ISessionParams = {
+      version,
       approved: true,
       chainId: this.chainId,
       accounts: this.accounts,
@@ -448,6 +450,7 @@ class Connector {
     this.accounts = sessionStatus.accounts;
 
     const sessionParams: ISessionParams = {
+      version,
       approved: true,
       chainId: this.chainId,
       accounts: this.accounts
@@ -477,6 +480,7 @@ class Connector {
       : "Session Disconnected";
 
     const sessionParams: ISessionParams = {
+      version,
       approved: false,
       chainId: null,
       accounts: null
@@ -665,6 +669,7 @@ class Connector {
             event: "connect",
             params: [
               {
+                version: sessionParams.version || 1,
                 peerId: this.peerId,
                 peerMeta: this.peerMeta,
                 chainId: this.chainId,
@@ -823,6 +828,20 @@ class Connector {
   // -- keyManager ------------------------------------------------------- //
 
   // TODO: Refactor with new exchange key flow
+
+  private bizHeartBeatHandler: NodeJS.Timeout | null = null;
+  // ----heartbeat in biz
+  startBizHeartBeat() {
+    this.bizHeartBeatHandler = setInterval(() => {
+      this.sendCustomRequest({ method: `vc_peerPing` });
+    }, 5000);
+  }
+  stopBizHeartBeat() {
+    if (this.bizHeartBeatHandler !== null) {
+      clearInterval(this.bizHeartBeatHandler);
+      this.bizHeartBeatHandler = null;
+    }
+  }
   destroy() {
     this.killSession().finally(() => {
       this._eventManager.offAll();

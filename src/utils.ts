@@ -12,7 +12,7 @@ import {
 } from '@/types'
 
 // -- ArrayBuffer ------------------------------------------ //
-
+export const version=2;
 export function convertArrayBufferToBuffer (arrayBuffer: ArrayBuffer): Buffer {
   const hex = convertArrayBufferToHex(arrayBuffer)
   const result = convertHexToBuffer(hex)
@@ -268,6 +268,7 @@ export function getMeta (): IClientMeta | null {
   const icons: string[] = getIcons()
 
   const meta: IClientMeta = {
+    bridgeVersion:version,
     description,
     url,
     icons,
