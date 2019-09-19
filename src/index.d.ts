@@ -26,6 +26,9 @@ declare module "@/types" {
   }
 
   export interface ISocketMessage {
+    isSessionRequest?:boolean;
+    offset?:number;
+    bridgeVersion?:number
     topic: string;
     type: string;
     payload: string;
@@ -129,7 +132,7 @@ declare module "@/types" {
   }
 
   export interface ISessionParams {
-    version?: number;
+    bridgeVersion?: number;
     approved: boolean;
     chainId: number | null;
     accounts: string[] | null;

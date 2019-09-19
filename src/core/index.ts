@@ -69,7 +69,7 @@ class Connector {
     this.cryptoLib = cryptoLib;
 
     this.protocol = "vc";
-    this.version = 1;
+    this.version = version;
 
     this._bridge = "";
     this._key = null;
@@ -387,7 +387,7 @@ class Connector {
     this.accounts = sessionStatus.accounts;
 
     const sessionParams: ISessionParams = {
-      version,
+      bridgeVersion:version,
       approved: true,
       chainId: this.chainId,
       accounts: this.accounts,
@@ -450,7 +450,7 @@ class Connector {
     this.accounts = sessionStatus.accounts;
 
     const sessionParams: ISessionParams = {
-      version,
+      bridgeVersion:version,
       approved: true,
       chainId: this.chainId,
       accounts: this.accounts
@@ -480,7 +480,7 @@ class Connector {
       : "Session Disconnected";
 
     const sessionParams: ISessionParams = {
-      version,
+      bridgeVersion:version,
       approved: false,
       chainId: null,
       accounts: null
@@ -534,7 +534,8 @@ class Connector {
 
   private async _sendRequest(
     request: Partial<IJsonRpcRequest>,
-    _topic?: string
+    _topic?: string,
+    isSessionRequest = false
   ) {
     const callRequest: IJsonRpcRequest = this._formatRequest(request);
 
@@ -548,7 +549,8 @@ class Connector {
     const socketMessage: ISocketMessage = {
       topic,
       type: "pub",
-      payload
+      payload,
+      isSessionRequest
     };
 
     this._socket.send(socketMessage);
@@ -578,7 +580,7 @@ class Connector {
     errorMsg: string,
     _topic?: string
   ) {
-    this._sendRequest(request, _topic);
+    this._sendRequest(request, _topic, true);
     this._subscribeToSessionResponse(request.id, errorMsg);
   }
 
@@ -669,7 +671,7 @@ class Connector {
             event: "connect",
             params: [
               {
-                version: sessionParams.version || 1,
+                version: sessionParams.bridgeVersion || 1,
                 peerId: this.peerId,
                 peerMeta: this.peerMeta,
                 chainId: this.chainId,
