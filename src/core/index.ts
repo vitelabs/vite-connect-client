@@ -815,7 +815,7 @@ class Connector {
           ]
         });
       }
-      if (payload[0].params && payload[0].params.version < 2) {
+      if (payload.params && payload.params[0]&&payload.params[0].version < 2) {
         this.startBizHeartBeat();
       }
       this._socket.pushIncoming();
@@ -837,6 +837,7 @@ class Connector {
   private bizHeartBeatHandler: NodeJS.Timeout | null = null;
   // ----heartbeat in biz
   startBizHeartBeat() {
+    this.sendCustomRequest({ method: `vc_peerPing` });
     this.bizHeartBeatHandler = setInterval(() => {
       this.sendCustomRequest({ method: `vc_peerPing` });
     }, 5000);
