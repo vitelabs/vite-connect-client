@@ -387,7 +387,7 @@ class Connector {
     this.accounts = sessionStatus.accounts;
 
     const sessionParams: ISessionParams = {
-      bridgeVersion:version,
+      bridgeVersion: version,
       approved: true,
       chainId: this.chainId,
       accounts: this.accounts,
@@ -450,7 +450,7 @@ class Connector {
     this.accounts = sessionStatus.accounts;
 
     const sessionParams: ISessionParams = {
-      bridgeVersion:version,
+      bridgeVersion: version,
       approved: true,
       chainId: this.chainId,
       accounts: this.accounts
@@ -480,7 +480,7 @@ class Connector {
       : "Session Disconnected";
 
     const sessionParams: ISessionParams = {
-      bridgeVersion:version,
+      bridgeVersion: version,
       approved: false,
       chainId: null,
       accounts: null
@@ -815,6 +815,9 @@ class Connector {
           ]
         });
       }
+      if (payload[0].params && payload[0].params.version < 2) {
+        this.startBizHeartBeat();
+      }
       this._socket.pushIncoming();
     });
     this.on("vc_peerPing", (error, payload) => {
@@ -845,6 +848,7 @@ class Connector {
     }
   }
   destroy() {
+    this.stopBizHeartBeat();
     this.killSession().finally(() => {
       this._eventManager.offAll();
       this._socket.close();
