@@ -1,9 +1,8 @@
 {
-  "version": "1.0.1-1",
-  "name": "@vite/bifrost",
-  "description": "viteBifrost fork from walletconnect",
+  "name": "@vite/connector",
+  "description": "connector fork from walletconnect",
   "keywords": [
-    "ViteBifrost",
+    "connector",
     "vitejs",
     "vite",
     "crypto"
