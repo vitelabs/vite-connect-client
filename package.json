@@ -57,5 +57,6 @@
     "@ethersproject/bytes": "^5.0.0-beta.126",
     "@ethersproject/strings": "^5.0.0-beta.125",
     "@types/node": "^12.0.12"
-  }
+  },
+  "version": "0.0.1"
 }
