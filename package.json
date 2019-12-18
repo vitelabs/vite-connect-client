@@ -1,15 +1,15 @@
 {
   "name": "@vite/connector",
-  "description": "connector fork from walletconnect",
+  "description": "vite connect client sdk",
   "keywords": [
     "connector",
     "vitejs",
     "vite",
-    "crypto"
+    "connect"
   ],
   "main": "./lib/index.js",
-  "author": "WalletConnect <walletconnect.org>",
-  "homepage": "https://github.com/WalletConnect/walletconnect-monorepo/tree/v1.0.0-beta",
+  "author": "vitelabs",
+  "homepage": "https://github.com/vitelabs/vite-connect-client",
   "license": "LGPL-3.0",
   "scripts": {
     "example": "parcel ./example/index.html ./example/server.html --no-cache",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/walletconnect/walletconnect-monorepo.git"
+    "url": "git+https://github.com/vitelabs/vite-connect-client.git"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
