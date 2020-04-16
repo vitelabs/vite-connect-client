@@ -4,6 +4,10 @@
 
 @vite/connector can be used in html project.
 
+**Vite Connect SDK List:**
+* [vite-connect-bridge](https://github.com/vitelabs/vite-connect-bridge)
+* [vite-connect-client](https://github.com/vitelabs/vite-connect-client)
+
 ## Debug
 
 **Debug Page**: https://viteconnect-debug.netlify.app/
