@@ -87,3 +87,7 @@ vbInstance.on('disconnect', err => {
     console.log(err)
 })  
 ```
+
+### Debug
+
+**Debug Page**: https://viteconnect-debug.netlify.app/
