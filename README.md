@@ -4,6 +4,10 @@
 
 @vite/connector can be used in html project.
 
+## Debug
+
+**Debug Page**: https://viteconnect-debug.netlify.app/
+
 ## Getting Started
 
 ### Install
@@ -87,7 +91,3 @@ vbInstance.on('disconnect', err => {
     console.log(err)
 })  
 ```
-
-### Debug
-
-**Debug Page**: https://viteconnect-debug.netlify.app/
