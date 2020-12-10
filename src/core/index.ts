@@ -613,14 +613,12 @@ class Connector {
       const error = formatRpcError(response.error);
 
       const formattedResponseError: IJsonRpcResponseError = {
-        jsonrpc: "2.0",
         ...response,
         error
       };
       return formattedResponseError;
     } else if (isRpcResponseSuccess(response)) {
       const formattedResponseSuccess: IJsonRpcResponseSuccess = {
-        jsonrpc: "2.0",
         ...response
       };
 

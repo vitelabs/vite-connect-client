@@ -37,7 +37,7 @@ export async function importKey (
         hash: { name: HMAC_ALGORITHM },
         name: 'HMAC'
       }
-  const usages: string[] =
+  const usages: KeyUsage[] =
     type === AES_ALGORITHM ? ['encrypt', 'decrypt'] : ['sign', 'verify']
   const cryptoKey = await window.crypto.subtle.importKey(
     'raw',
