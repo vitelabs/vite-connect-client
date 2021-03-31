@@ -13,7 +13,7 @@
   "license": "LGPL-3.0",
   "scripts": {
     "example": "parcel ./example/index.html ./example/server.html --no-cache",
-    "build-example": "npm run build && parcel build ./example/index.html",
+    "build-example": "npm run build && parcel build ./example/index.html --public-url ./",
     "lint": "tslint packages/*/src/**/*.ts",
     "build": "webpack"
   },
