@@ -10,7 +10,7 @@
 
 ## Debug
 
-**Debug Page**: https://viteconnect-debug.netlify.app/
+**Debug Page**: https://vitelabs.github.io/vite-connect-client/
 
 ## Getting Started
 
